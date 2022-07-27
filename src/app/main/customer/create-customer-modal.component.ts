@@ -1,6 +1,6 @@
-import { Component, ViewChild, Injector, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, ViewChild, Injector, ElementRef, Output, EventEmitter, OnInit } from '@angular/core';
 //import { ModalDirective } from 'ngx-bootstrap';
-import { PersonServiceProxy, CreatePersonInput, CreateCustomerInput, CustomerServiceProxy } from '@shared/service-proxies/service-proxies';
+import { PersonServiceProxy, CreatePersonInput, CreateCustomerInput, CustomerServiceProxy, UserListDto, UserServiceProxy, User } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { finalize } from 'rxjs/operators';
 import { ModalDirective } from 'ngx-bootstrap/modal/modal.directive';
@@ -9,8 +9,10 @@ import { ModalDirective } from 'ngx-bootstrap/modal/modal.directive';
     selector: 'createCustomerModal',
     templateUrl: './create-customer-modal.component.html'
 })
-export class CreateCustomerModalComponent extends AppComponentBase {
-
+export class CreateCustomerModalComponent extends AppComponentBase  implements OnInit {
+    // user: UserListDto[] = [];
+    filter: string = '';
+    user:User[]=[];
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
 
     @ViewChild('modal' , { static: false }) modal: ModalDirective;
@@ -23,11 +25,22 @@ export class CreateCustomerModalComponent extends AppComponentBase {
 
     constructor(
         injector: Injector,
-        private _customerService: CustomerServiceProxy
+        private _customerService: CustomerServiceProxy,
+        private _userService:UserServiceProxy
     ) {
         super(injector);
     }
+    ngOnInit(): void {
+      
+        this.getUser();
+    }
 
+    getUser(){
+        this._customerService.getUser(this.filter).subscribe((result) => {
+            this.user = result.items;
+            console.log("user=",this.user);
+        });
+    }
     show(): void {
         this.active = true;
         this.customer = new CreateCustomerInput();
@@ -53,4 +66,10 @@ export class CreateCustomerModalComponent extends AppComponentBase {
         this.modal.hide();
         this.active = false;
     }
+    // getUser(): void {
+    //     this._userService.getUsers(this.filter).subscribe((result) => {
+    //         this.user = result.items;
+    //     });
+    // }
+    
 }

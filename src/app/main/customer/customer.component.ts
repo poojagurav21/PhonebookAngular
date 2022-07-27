@@ -1,7 +1,7 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
-import { CustomerListDto, CustomerServiceProxy } from '@shared/service-proxies/service-proxies';
+import { AddUserInput, CustomerListDto, CustomerServiceProxy, User } from '@shared/service-proxies/service-proxies';
 import * as _ from 'lodash-es';
 @Component({
     templateUrl: './customer.component.html',
@@ -12,7 +12,9 @@ import * as _ from 'lodash-es';
 export class CustomerComponent extends AppComponentBase implements OnInit {
     customer: CustomerListDto[] = [];
     filter: string = '';
-
+    editingCustomer: CustomerListDto = null;
+    newUser: AddUserInput = null;
+    user:User[]=[];
     constructor(
         injector: Injector,
         private _customerService: CustomerServiceProxy
@@ -22,6 +24,7 @@ export class CustomerComponent extends AppComponentBase implements OnInit {
 
     ngOnInit(): void {
         this.getCustomer();
+        this.getUser();
     }
 
     getCustomer(): void {
@@ -43,5 +46,48 @@ export class CustomerComponent extends AppComponentBase implements OnInit {
             }
         );
     } 
-    
+    editCustomer(customer: CustomerListDto): void {
+        if (customer === this.editingCustomer) {
+            this.editingCustomer = null;
+        } else {
+            this.editingCustomer=new CustomerListDto();
+            this.editingCustomer.custUsers=[];
+            this.editingCustomer = customer;
+
+            this.newUser = new AddUserInput();
+           
+            this.newUser.customerRefId = customer.id;
+        }
+    };
+
+    deleteUser(user, customer): void {
+        this._customerService.deleteUser(user.id).subscribe(() => {
+            this.notify.success(this.l('SuccessfullyDeleted'));
+            _.remove(customer.custUsers, user);
+        });
+    };
+
+    saveUser(): void {
+        if (!this.newUser.customerRefId&& !this.newUser.userRefId) {
+            this.message.warn('Please enter a number!');
+            return;
+        }
+
+        this._customerService.addUser(this.newUser).subscribe((result) => {
+          
+         //  result.userId=10;
+            this.editingCustomer.custUsers.push(result);
+            console.log(result);
+            // this.newUser.customerRefId
+            // this.newUser.userRefId()
+            // this.newUser.totalBillingAmount
+            this.notify.success(this.l('SavedSuccessfully'));
+        });
+    };
+    getUser(){
+        this._customerService.getUser(this.filter).subscribe((result) => {
+            this.user = result.items;
+            console.log("user=",this.user);
+        });
+    }
 }
