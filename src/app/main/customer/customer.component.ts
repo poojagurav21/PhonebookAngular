@@ -96,10 +96,10 @@ export class CustomerComponent extends AppComponentBase implements OnInit {
         // if (customer === this.editingCustomer) {
         //     this.editingCustomer
         // }
-        this._customerService.getUserView(this.customer.id).subscribe((result:any)=>{
-            console.log(result);
-            this.custUser=result;
-        })
+        // this._customerService.getUserView(this.customer.id).subscribe((result:any)=>{
+        //     console.log(result);
+        //     this.custUser=result;
+        // })
     }
 }
 //  editPerson(person: PersonListDto): void {
