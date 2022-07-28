@@ -1,7 +1,7 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
-import { AddUserInput, CustomerListDto, CustomerServiceProxy, User } from '@shared/service-proxies/service-proxies';
+import { AddUserInput, CustomerListDto, CustomerServiceProxy, User, UserViewDto } from '@shared/service-proxies/service-proxies';
 import * as _ from 'lodash-es';
 @Component({
     templateUrl: './customer.component.html',
@@ -14,7 +14,9 @@ export class CustomerComponent extends AppComponentBase implements OnInit {
     filter: string = '';
     editingCustomer: CustomerListDto = null;
     newUser: AddUserInput = null;
-    user:User[]=[];
+    user: User[] = [];
+    custUser:UserViewDto;
+    //custUser:Customer[]=[];
     constructor(
         injector: Injector,
         private _customerService: CustomerServiceProxy
@@ -45,17 +47,17 @@ export class CustomerComponent extends AppComponentBase implements OnInit {
                 }
             }
         );
-    } 
+    }
     editCustomer(customer: CustomerListDto): void {
         if (customer === this.editingCustomer) {
             this.editingCustomer = null;
         } else {
-            this.editingCustomer=new CustomerListDto();
-            this.editingCustomer.custUsers=[];
+            this.editingCustomer = new CustomerListDto();
+            this.editingCustomer.custUsers = [];
             this.editingCustomer = customer;
 
             this.newUser = new AddUserInput();
-           
+
             this.newUser.customerRefId = customer.id;
         }
     };
@@ -68,14 +70,14 @@ export class CustomerComponent extends AppComponentBase implements OnInit {
     };
 
     saveUser(): void {
-        if (!this.newUser.customerRefId&& !this.newUser.userRefId) {
+        if (!this.newUser.customerRefId && !this.newUser.userRefId) {
             this.message.warn('Please enter a number!');
             return;
         }
 
         this._customerService.addUser(this.newUser).subscribe((result) => {
-          
-         //  result.userId=10;
+
+            //  result.userId=10;
             this.editingCustomer.custUsers.push(result);
             console.log(result);
             // this.newUser.customerRefId
@@ -84,10 +86,30 @@ export class CustomerComponent extends AppComponentBase implements OnInit {
             this.notify.success(this.l('SavedSuccessfully'));
         });
     };
-    getUser(){
+    getUser() {
         this._customerService.getUser(this.filter).subscribe((result) => {
             this.user = result.items;
-            console.log("user=",this.user);
+            console.log("user=", this.user);
         });
     }
+    viewUser(customerId) {
+        // if (customer === this.editingCustomer) {
+        //     this.editingCustomer
+        // }
+        this._customerService.getUserView(this.customer.id).subscribe((result:any)=>{
+            console.log(result);
+            this.custUser=result;
+        })
+    }
 }
+//  editPerson(person: PersonListDto): void {
+//         if (person === this.editingPerson) {
+//             this.editingPerson = null;
+//         } else {
+//             this.editingPerson = person;
+
+//             this.newPhone = new AddPhoneInput();
+//             this.newPhone.type = PhoneType.Mobile;
+//             this.newPhone.personId = person.id;
+//         }
+//     };
