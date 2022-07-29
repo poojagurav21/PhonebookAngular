@@ -7,7 +7,7 @@
                     <h4 class="modal-title">
                         <span>{{"CreateNewCustomer" | localize}}</span>
                     </h4>
-                    <button type="button" class="close" (click)="close()" aria-label="Close">
+                    <button type="button" class="close btn btn-danger" (click)="close()" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -36,20 +36,20 @@
                         <div class="col-8">
                         <label>{{ "User" | localize}}</label>
                         <!-- <select  class="form-control" name="user" [(ngModel)]="customer.userRefId">   -->
-                        <select class="form-control col-6" name="userRefId" [(ngModel)]="customer.userRefId">
+                        <select class="form-control col-6" #select (change)="onselect(select.value)" name="userRefId" [(ngModel)]="customer.userRefId">
 
-                            <option *ngFor="let u of user" [value]="u.id">{{u.name}}</option>
+                            <option *ngFor="let u of user" [value]="u.id" >{{u.name}}</option>
                         </select></div>
                         <div class="col-3 mt-5">
-                        <button  class="btn btn-primary"><i class="fa fa-plus"></i>AddUser</button>
+                        <button type="button" class="btn btn-primary" (click)="pushValue(select.value)" ><i class="fa fa-plus"></i>AddUser</button>
                     </div>
                     </div>
-                
+                <!-- onclick="pushValue(select.value)" -->
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-secondary" (click)="close()">{{"Cancel" |
                         localize}}</button>
-                    <button type="submit" class="btn btn-primary" [disabled]="!customerForm.form.valid"
+                    <button type="submit" class="btn btn-success" [disabled]="!customerForm.form.valid"
                         [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot' | localize)"><i class="fa fa-save"></i>
                         <span>{{"Save" | localize}}</span></button>
                 </div>

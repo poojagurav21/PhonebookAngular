@@ -9,15 +9,15 @@ import { ModalDirective } from 'ngx-bootstrap/modal/modal.directive';
     selector: 'createCustomerModal',
     templateUrl: './create-customer-modal.component.html'
 })
-export class CreateCustomerModalComponent extends AppComponentBase  implements OnInit {
+export class CreateCustomerModalComponent extends AppComponentBase implements OnInit {
     // user: UserListDto[] = [];
     filter: string = '';
-    user:User[]=[];
+    user: User[] = [];
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
 
-    @ViewChild('modal' , { static: false }) modal: ModalDirective;
-    @ViewChild('nameInput' , { static: false }) nameInput: ElementRef;
-
+    @ViewChild('modal', { static: false }) modal: ModalDirective;
+    @ViewChild('nameInput', { static: false }) nameInput: ElementRef;
+    userValues=[];
     customer: CreateCustomerInput = new CreateCustomerInput();
 
     active: boolean = false;
@@ -26,19 +26,19 @@ export class CreateCustomerModalComponent extends AppComponentBase  implements O
     constructor(
         injector: Injector,
         private _customerService: CustomerServiceProxy,
-        private _userService:UserServiceProxy
+        private _userService: UserServiceProxy
     ) {
         super(injector);
     }
     ngOnInit(): void {
-      
+
         this.getUser();
     }
 
-    getUser(){
+    getUser() {
         this._customerService.getUser(this.filter).subscribe((result) => {
             this.user = result.items;
-            console.log("user=",this.user);
+            console.log("user=", this.user);
         });
     }
     show(): void {
@@ -61,7 +61,17 @@ export class CreateCustomerModalComponent extends AppComponentBase  implements O
                 this.modalSave.emit(this.customer);
             });
     }
+    onselect(value) {
+        console.log("selected id=", value)
+    }
+    pushValue(value) {
+        //debugger;
+        console.log("userIds=", value);
 
+        this.userValues.push(value);
+        console.log("UserValues=", this.userValues);
+        this.customer.userRefId = this.userValues;
+    }
     close(): void {
         this.modal.hide();
         this.active = false;
@@ -71,5 +81,5 @@ export class CreateCustomerModalComponent extends AppComponentBase  implements O
     //         this.user = result.items;
     //     });
     // }
-    
+
 }

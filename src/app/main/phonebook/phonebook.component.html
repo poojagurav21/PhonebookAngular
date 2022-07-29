@@ -1,4 +1,4 @@
-<div [@routerTransition] class="container col-8 p-5" style="background-color:rgb(11, 11, 11) ;">
+<div [@routerTransition] class="container col-8 p-5" style="background-color:rgb(246, 242, 242) ;">
     <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor col-8 " style="margin-left: 25%;">
         <div class="kt-subheader kt-grid__item">
             <div class="kt-container ">
@@ -41,9 +41,9 @@
                             </div>
                         </div>
                     </form>
-                    <div *ngFor="let person of people" class="container bg-active-light mt-5" [ngClass]="{'bg-secondary kt-padding-10': person===editingPerson}">
-                        <div class="row kt-row--no-padding align-items-center">
-                            <div class="col bg-hover-light-primary">
+                    <div *ngFor="let person of people" class="container bg-active-light mt-5" style="background-color:rgb(189, 228, 241)" [ngClass]="{'bg-secondary kt-padding-10': person===editingPerson}">
+                        <div class="row kt-row--no-padding align-items-center" >
+                            <div class="col bg-hover-light-primary" >
                                 <h4>{{person.name + ' ' + person.surname}}</h4>
                                 <span>{{person.emailAddress}}</span>
                             </div>

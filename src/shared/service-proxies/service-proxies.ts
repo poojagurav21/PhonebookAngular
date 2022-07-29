@@ -16798,7 +16798,7 @@ export class CreateCustomerInput implements ICreateCustomerInput {
     emailAddress!: string | undefined;
     registrationDate!: DateTime;
     address!: string | undefined;
-    userRefId!: number;
+    userRefId!: number[] | undefined;
 
     constructor(data?: ICreateCustomerInput) {
         if (data) {
@@ -16815,7 +16815,11 @@ export class CreateCustomerInput implements ICreateCustomerInput {
             this.emailAddress = _data["emailAddress"];
             this.registrationDate = _data["registrationDate"] ? DateTime.fromISO(_data["registrationDate"].toString()) : <any>undefined;
             this.address = _data["address"];
-            this.userRefId = _data["userRefId"];
+            if (Array.isArray(_data["userRefId"])) {
+                this.userRefId = [] as any;
+                for (let item of _data["userRefId"])
+                    this.userRefId!.push(item);
+            }
         }
     }
 
@@ -16832,7 +16836,11 @@ export class CreateCustomerInput implements ICreateCustomerInput {
         data["emailAddress"] = this.emailAddress;
         data["registrationDate"] = this.registrationDate ? this.registrationDate.toString() : <any>undefined;
         data["address"] = this.address;
-        data["userRefId"] = this.userRefId;
+        if (Array.isArray(this.userRefId)) {
+            data["userRefId"] = [];
+            for (let item of this.userRefId)
+                data["userRefId"].push(item);
+        }
         return data; 
     }
 }
@@ -16842,7 +16850,7 @@ export interface ICreateCustomerInput {
     emailAddress: string | undefined;
     registrationDate: DateTime;
     address: string | undefined;
-    userRefId: number;
+    userRefId: number[] | undefined;
 }
 
 export class CreateEditionDto implements ICreateEditionDto {

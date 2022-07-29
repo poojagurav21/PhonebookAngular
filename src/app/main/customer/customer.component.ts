@@ -12,6 +12,7 @@ import * as _ from 'lodash-es';
 export class CustomerComponent extends AppComponentBase implements OnInit {
     customer: CustomerListDto[] = [];
     filter: string = '';
+    filter2:string='';
     editingCustomer: CustomerListDto = null;
     newUser: AddUserInput = null;
     user: User[] = [];
@@ -87,7 +88,7 @@ export class CustomerComponent extends AppComponentBase implements OnInit {
         });
     };
     getUser() {
-        this._customerService.getUser(this.filter).subscribe((result) => {
+        this._customerService.getUser(this.filter2).subscribe((result) => {
             this.user = result.items;
             console.log("user=", this.user);
         });
