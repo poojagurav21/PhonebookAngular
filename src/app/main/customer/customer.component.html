@@ -61,7 +61,7 @@
                             <i class="bi bi-three-dots  text-primary"></i>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                          <li><a (click)="viewUser(cust.id)" class="dropdown-item text-primary btn btn-outline-success" title="{{'View User' | localize}}" href="javascript:;"><i class="fa fa-address-card"></i>View User</a></li>
+                          <li><a (click)="viewUser(cust.id)" data-bs-target="#exampleModal" data-bs-toggle="modal" class="dropdown-item text-primary btn btn-outline-success" title="{{'View User' | localize}}" href="javascript:;"><i class="fa fa-address-card"></i>View User</a></li>
                           <li><a class="dropdown-item text-primary" *ngIf="'Pages.Tenant.Customer.EditCustomer' | permission" (click)="editCustomerModal.show(cust.id)" title="{{'Edit Customer' | localize}}"
                              href="javascript:;"> <i class="fa fa-eye"></i>Edit Customer</a></li>
                           <li><a class="dropdown-item text-primary" id="deleteCustomer" (click)="deleteCustomer(cust)" title="{{'Delete' | localize}}"
@@ -144,3 +144,77 @@
     </div>
 
 </div>
+
+<!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Launch demo modal
+  </button>
+   -->
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-bordered table-hover align-items-center fw-bold mt-5"
+          style="margin-top: 25%; font-weight: bold;">
+            <tr class="fw-bold" style="margin-bottom: 15%; text-align:center; color: rgb(240, 232, 9);">
+                <th>Id</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Email</th>
+            </tr>
+            <tr *ngFor="let user of custUser" class="bg-hover-light" style="text-align:center ;">
+                <td>{{user.id}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.surname}}</td>
+                <td>{{user.emailAddress}}</td>
+            </tr>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- <div class="container mt-3">
+      <h3>Modal Example</h3>
+      <p>Click on the button to open the modal.</p>
+      
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+        Open modal
+      </button>
+    </div>
+    
+ 
+    <div class="modal" id="myModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+    
+          
+          <div class="modal-header">
+            <h4 class="modal-title">Modal Heading</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+    
+        
+          <div class="modal-body">
+            Modal body..
+          </div>
+    
+         
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+          </div>
+    
+        </div>
+      </div>
+    </div>
+    
+    
+     -->

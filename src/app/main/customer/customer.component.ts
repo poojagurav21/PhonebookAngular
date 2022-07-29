@@ -15,8 +15,8 @@ export class CustomerComponent extends AppComponentBase implements OnInit {
     editingCustomer: CustomerListDto = null;
     newUser: AddUserInput = null;
     user: User[] = [];
-    custUser:UserViewDto;
-    //custUser:Customer[]=[];
+    custUser:UserViewDto[]=[];
+   
     constructor(
         injector: Injector,
         private _customerService: CustomerServiceProxy
@@ -96,10 +96,10 @@ export class CustomerComponent extends AppComponentBase implements OnInit {
         // if (customer === this.editingCustomer) {
         //     this.editingCustomer
         // }
-        // this._customerService.getUserView(this.customer.id).subscribe((result:any)=>{
-        //     console.log(result);
-        //     this.custUser=result;
-        // })
+        this._customerService.getUserView(customerId).subscribe((result:any)=>{
+            console.log("custuser=",result);
+            this.custUser=result;
+        })
     }
 }
 //  editPerson(person: PersonListDto): void {

@@ -30545,6 +30545,7 @@ export interface IUserToken {
 }
 
 export class UserViewDto implements IUserViewDto {
+    id!: number;
     name!: string | undefined;
     surname!: string | undefined;
     emailAddress!: string | undefined;
@@ -30560,6 +30561,7 @@ export class UserViewDto implements IUserViewDto {
 
     init(_data?: any) {
         if (_data) {
+            this.id = _data["id"];
             this.name = _data["name"];
             this.surname = _data["surname"];
             this.emailAddress = _data["emailAddress"];
@@ -30575,6 +30577,7 @@ export class UserViewDto implements IUserViewDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
         data["name"] = this.name;
         data["surname"] = this.surname;
         data["emailAddress"] = this.emailAddress;
@@ -30583,6 +30586,7 @@ export class UserViewDto implements IUserViewDto {
 }
 
 export interface IUserViewDto {
+    id: number;
     name: string | undefined;
     surname: string | undefined;
     emailAddress: string | undefined;
