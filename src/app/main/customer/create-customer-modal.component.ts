@@ -4,7 +4,6 @@ import { PersonServiceProxy, CreatePersonInput, CreateCustomerInput, CustomerSer
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { finalize } from 'rxjs/operators';
 import { ModalDirective } from 'ngx-bootstrap/modal/modal.directive';
-
 @Component({
     selector: 'createCustomerModal',
     templateUrl: './create-customer-modal.component.html'
@@ -17,9 +16,9 @@ export class CreateCustomerModalComponent extends AppComponentBase implements On
 
     @ViewChild('modal', { static: false }) modal: ModalDirective;
     @ViewChild('nameInput', { static: false }) nameInput: ElementRef;
-    userValues=[];
+    userValues = [];
     customer: CreateCustomerInput = new CreateCustomerInput();
-
+    //custUserDropdown:CustomerUsersDropDownDto[]=[];
     active: boolean = false;
     saving: boolean = false;
 
@@ -31,15 +30,23 @@ export class CreateCustomerModalComponent extends AppComponentBase implements On
         super(injector);
     }
     ngOnInit(): void {
-
+        this.userValues = [];
         this.getUser();
-    }
 
+    }
+    // getUserForDropDown()
+    // {
+    //     this._customerService.getUserForDropdown(this.filter).subscribe((result)=>{
+
+
+    //     })
+    // }
     getUser() {
         this._customerService.getUser(this.filter).subscribe((result) => {
             this.user = result.items;
             console.log("user=", this.user);
         });
+        //location.reload();
     }
     show(): void {
         this.active = true;
@@ -60,12 +67,18 @@ export class CreateCustomerModalComponent extends AppComponentBase implements On
                 this.close();
                 this.modalSave.emit(this.customer);
             });
+
     }
+
+    refresh(): void {
+        window.location.reload();
+    }
+
     onselect(value) {
         console.log("selected id=", value)
     }
     pushValue(value) {
-        //debugger;
+       
         console.log("userIds=", value);
 
         this.userValues.push(value);
