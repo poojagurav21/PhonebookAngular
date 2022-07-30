@@ -34,17 +34,20 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-8">
-                        <label>{{ "User" | localize}}</label>
-                        <!-- <select  class="form-control" name="user" [(ngModel)]="customer.userRefId">   -->
-                        <select class="form-control col-6" #select (change)="onselect(select.value)" name="userRefId" [(ngModel)]="customer.userRefId">
+                            <label>{{ "User" | localize}}</label>
+                            <!-- <select  class="form-control" name="user" [(ngModel)]="customer.userRefId">   -->
+                            <select class="form-control col-6" #select (change)="onselect(select.value)"
+                                name="userRefId" [(ngModel)]="customer.userRefId">
 
-                            <option *ngFor="let u of user" [value]="u.id" >{{u.name}}</option>
-                        </select></div>
+                                <option *ngFor="let u of user" [value]="u.id">{{u.name}}</option>
+                            </select>
+                        </div>
                         <div class="col-3 mt-5">
-                        <button type="button" class="btn btn-primary" (click)="pushValue(select.value)" ><i class="fa fa-plus"></i>AddUser</button>
+                            <button type="button" class="btn btn-primary" (click)="pushValue(select.value)"><i
+                                    class="fa fa-plus"></i>AddUser</button>
+                        </div>
                     </div>
-                    </div>
-                <!-- onclick="pushValue(select.value)" -->
+                    <!-- onclick="pushValue(select.value)" -->
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-secondary" (click)="close()">{{"Cancel" |
