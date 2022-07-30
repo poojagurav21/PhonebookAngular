@@ -1,5 +1,4 @@
 import { Component, ViewChild, Injector, ElementRef, Output, EventEmitter } from '@angular/core';
-//import { ModalDirective } from 'ngx-bootstrap';
 import { CustomerServiceProxy, EditCustomerInput, User } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { ModalDirective } from 'ngx-bootstrap/modal/modal.directive';
@@ -37,7 +36,7 @@ export class EditCustomerModalComponent extends AppComponentBase {
   }
 
   onShown(): void {
-   // this.nameInput.nativeElement.focus();
+
   }
 
   save(): void {

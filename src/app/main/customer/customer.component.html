@@ -1,4 +1,4 @@
-<div [@routerTransition] >
+<div [@routerTransition]>
     <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
         <div class="kt-subheader kt-grid__item">
             <div [class]="containerClass">
@@ -41,89 +41,99 @@
         <table class="table table-bordered table-hover align-items-center fw-bold mt-5"
             style="margin-top: 25%; font-weight: bold;">
             <thead>
-            <tr class="fw-bold bg-dark " style=" text-align:center; color: rgb(245, 11, 11);">
-                <th>Name</th>
-                <th>Email</th>
-                <th>RegistrationDate</th>
-                <th>Address</th>
+                <tr class="fw-bold bg-dark " style=" text-align:center; color: rgb(245, 11, 11);">
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>RegistrationDate</th>
+                    <th>Address</th>
 
-                <th>Actions</th>
-                <hr>
-            </tr></thead><tbody >
-            <tr *ngFor="let cust of customer"   style="text-align:center ; background-color: rgb(226, 238, 250);">
-                <td>{{cust.customerName}}</td>
-                <td>{{cust.emailAddress}}</td>
-                <td>{{cust.registrationDate|date}}</td>
-                <td>{{cust.address}}</td>
+                    <th>Actions</th>
+                    <hr>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let cust of customer" style="text-align:center ; background-color: rgb(226, 238, 250);">
+                    <td>{{cust.customerName}}</td>
+                    <td>{{cust.emailAddress}}</td>
+                    <td>{{cust.registrationDate|date}}</td>
+                    <td>{{cust.address}}</td>
 
-                <td>
-                    <div class="dropdown">
-                        <button class="btn btn-dark" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-three-dots  text-primary"></i>
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                          <li><a (click)="viewUser(cust.id)" data-bs-target="#exampleModal" data-bs-toggle="modal" class="dropdown-item text-primary btn btn-outline-success" title="{{'View User' | localize}}" href="javascript:;"><i class="fa fa-address-card"></i>View User</a></li>
-                          <li><a class="dropdown-item text-primary" *ngIf="'Pages.Tenant.Customer.EditCustomer' | permission" (click)="editCustomerModal.show(cust.id)" title="{{'Edit Customer' | localize}}"
-                             href="javascript:;"> <i class="fa fa-eye"></i>Edit Customer</a></li>
-                          <li><a class="dropdown-item text-primary" id="deleteCustomer" (click)="deleteCustomer(cust)" title="{{'Delete' | localize}}"
-                             href="javascript:;"> <i class="fa fa-trash"></i>Delete</a></li>
-                        </ul>
-                      </div>
-                    
-                </td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-dark" type="button" id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-three-dots  text-primary"></i>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><a (click)="viewUser(cust.id)" data-bs-target="#exampleModal" data-bs-toggle="modal"
+                                        class="dropdown-item text-primary btn btn-outline-success"
+                                        title="{{'View User' | localize}}" href="javascript:;"><i
+                                            class="fa fa-address-card"></i>View User</a></li>
+                                <li><a class="dropdown-item text-primary"
+                                        *ngIf="'Pages.Tenant.Customer.EditCustomer' | permission"
+                                        (click)="editCustomerModal.show(cust.id)" title="{{'Edit Customer' | localize}}"
+                                        href="javascript:;"> <i class="fa fa-eye"></i>Edit Customer</a></li>
+                                <li><a class="dropdown-item text-primary" id="deleteCustomer"
+                                        (click)="deleteCustomer(cust)" title="{{'Delete' | localize}}"
+                                        href="javascript:;"> <i class="fa fa-trash"></i>Delete</a></li>
+                            </ul>
+                        </div>
 
-
-                <div class="row">
-                    <div class="col-sm-12 kt-margin-t-20" *ngIf="cust===editingCustomer">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th style="width:10%"></th>
-                                    <th style="width:15%">{{"Customer"|localize}}</th>
-                                    <th style="width:15%">{{"User" | localize}}</th>
-                                    <th style="width:75%">{{"TotalBillingAmount" | localize}}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let user of cust.custUsers">
-                                    <td>
-                                        <button *ngIf="'Pages.Tenant.Customer.EditCustomer' | permission"
-                                            (click)="deleteUser(user, customer)"
-                                            class="btn btn-outline-danger kt-btn kt-btn--icon kt-btn--icon-only kt-btn--pill">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    </td>
-                                <tr>
-                                    <td>{{cust.customerRefId}}</td>
-                                    <td>{{cust.userRefId}}</td>
-                                    <td>{{cust.totalBillingAmount}}</td>
-
-                                </tr>
-                                <tr *ngIf="'Pages.Tenant.Customer.EditCustomer' | permission">
-                                    <td>
-                                        <button (click)="saveUser()" class="btn btn-sm btn-success">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </td>
-                                    <td><input type="text" name="number" [(ngModel)]="newUser.customerRefId"
-                                            class="form-control" /></td>
-                                    <td><input type="text" name="number" [(ngModel)]="newUser.userRefId"
-                                            class="form-control" /></td>
-                                    <td><input type="text" name="number" [(ngModel)]="newUser.totalBillingAmount"
-                                            class="form-control" />
-                                    </td>
-                                    <h2>{{cust.customerRefId}}</h2>
-                                    <h2>{{cust.userRefId}}</h2>
-                                    <h2>{{cust.totalBillingAmount}}</h2>
-                                </tr>
-                            </tbody>
-                        </table>
+                    </td>
 
 
+                    <div class="row">
+                        <div class="col-sm-12 kt-margin-t-20" *ngIf="cust===editingCustomer">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th style="width:10%"></th>
+                                        <th style="width:15%">{{"Customer"|localize}}</th>
+                                        <th style="width:15%">{{"User" | localize}}</th>
+                                        <th style="width:75%">{{"TotalBillingAmount" | localize}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let user of cust.custUsers">
+                                        <td>
+                                            <button *ngIf="'Pages.Tenant.Customer.EditCustomer' | permission"
+                                                (click)="deleteUser(user, customer)"
+                                                class="btn btn-outline-danger kt-btn kt-btn--icon kt-btn--icon-only kt-btn--pill">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    <tr>
+                                        <td>{{cust.customerRefId}}</td>
+                                        <td>{{cust.userRefId}}</td>
+                                        <td>{{cust.totalBillingAmount}}</td>
+
+                                    </tr>
+                                    <tr *ngIf="'Pages.Tenant.Customer.EditCustomer' | permission">
+                                        <td>
+                                            <button (click)="saveUser()" class="btn btn-sm btn-success">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </td>
+                                        <td><input type="text" name="number" [(ngModel)]="newUser.customerRefId"
+                                                class="form-control" /></td>
+                                        <td><input type="text" name="number" [(ngModel)]="newUser.userRefId"
+                                                class="form-control" /></td>
+                                        <td><input type="text" name="number" [(ngModel)]="newUser.totalBillingAmount"
+                                                class="form-control" />
+                                        </td>
+                                        <h2>{{cust.customerRefId}}</h2>
+                                        <h2>{{cust.userRefId}}</h2>
+                                        <h2>{{cust.totalBillingAmount}}</h2>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+
+                        </div>
                     </div>
-                </div>
 
-            </tr></tbody>
+                </tr>
+            </tbody>
 
         </table>
 
@@ -134,81 +144,48 @@
 </div>
 
 
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Customer's User</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <div class="form-group align-items-center">
-                <div class="input-group">
-                    <input [(ngModel)]="filter2" name="filterText" autoFocus class="form-control"
-                        [placeholder]="l('SearchWithThreeDot' | localize)" type="text">
-                    <span class="input-group-btn">
-                        <button (click)="getUser()" class="btn btn-primary" type="submit"><i
-                                class="flaticon-search-1"></i></button>
-                    </span>
-                </div>
-            </div>
-          <table class="table table-bordered table-hover table-dark text-center fw-bold"
-          style="margin-top: 5%; font-weight: bold; text-align: center;">
-          <thead>
-            <tr class="fw-bold p-5"  >
-                <th>Id</th>
-                <th>Name</th>
-                <th>Surname</th>
-                <th>Email</th>
-            </tr></thead><tbody>
-            <tr *ngFor="let user of custUser" class="bg-hover-light p-5">
-                <td>{{user.id}}</td>
-                <td>{{user.name}}</td>
-                <td>{{user.surname}}</td>
-                <td>{{user.emailAddress}}</td>
-            </tr></tbody>
-          </table>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          
-        </div>
-      </div>
-    </div>
-  </div>
-    <!-- <div class="container mt-3">
-      <h3>Modal Example</h3>
-      <p>Click on the button to open the modal.</p>
-      
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-        Open modal
-      </button>
-    </div>
-    
- 
-    <div class="modal" id="myModal">
-      <div class="modal-dialog">
         <div class="modal-content">
-    
-          
-          <div class="modal-header">
-            <h4 class="modal-title">Modal Heading</h4>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-          </div>
-    
-        
-          <div class="modal-body">
-            Modal body..
-          </div>
-    
-         
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-          </div>
-    
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Customer's User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group align-items-center">
+                    <div class="input-group">
+                        <input [(ngModel)]="filter2" name="filterText" autoFocus class="form-control"
+                            [placeholder]="l('SearchWithThreeDot' | localize)" type="text">
+                        <span class="input-group-btn">
+                            <button (click)="getUser()" class="btn btn-primary" type="submit"><i
+                                    class="flaticon-search-1"></i></button>
+                        </span>
+                    </div>
+                </div>
+                <table class="table table-bordered table-hover table-dark text-center fw-bold"
+                    style="margin-top: 5%; font-weight: bold; text-align: center;">
+                    <thead>
+                        <tr class="fw-bold p-5">
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Surname</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of custUser" class="bg-hover-light p-5">
+                            <td>{{user.id}}</td>
+                            <td>{{user.name}}</td>
+                            <td>{{user.surname}}</td>
+                            <td>{{user.emailAddress}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+            </div>
         </div>
-      </div>
     </div>
-    
-    
-     -->
+</div>

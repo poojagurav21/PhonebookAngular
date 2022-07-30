@@ -12,12 +12,12 @@ import * as _ from 'lodash-es';
 export class CustomerComponent extends AppComponentBase implements OnInit {
     customer: CustomerListDto[] = [];
     filter: string = '';
-    filter2:string='';
+    filter2: string = '';
     editingCustomer: CustomerListDto = null;
     newUser: AddUserInput = null;
     user: User[] = [];
-    custUser:UserViewDto[]=[];
-   
+    custUser: UserViewDto[] = [];
+
     constructor(
         injector: Injector,
         private _customerService: CustomerServiceProxy
@@ -75,15 +75,9 @@ export class CustomerComponent extends AppComponentBase implements OnInit {
             this.message.warn('Please enter a number!');
             return;
         }
-
         this._customerService.addUser(this.newUser).subscribe((result) => {
-
-            //  result.userId=10;
             this.editingCustomer.custUsers.push(result);
             console.log(result);
-            // this.newUser.customerRefId
-            // this.newUser.userRefId()
-            // this.newUser.totalBillingAmount
             this.notify.success(this.l('SavedSuccessfully'));
         });
     };
@@ -94,23 +88,9 @@ export class CustomerComponent extends AppComponentBase implements OnInit {
         });
     }
     viewUser(customerId) {
-        // if (customer === this.editingCustomer) {
-        //     this.editingCustomer
-        // }
-        this._customerService.getUserView(customerId).subscribe((result:any)=>{
-            console.log("custuser=",result);
-            this.custUser=result;
+        this._customerService.getUserView(customerId).subscribe((result: any) => {
+            console.log("custuser=", result);
+            this.custUser = result;
         })
     }
 }
-//  editPerson(person: PersonListDto): void {
-//         if (person === this.editingPerson) {
-//             this.editingPerson = null;
-//         } else {
-//             this.editingPerson = person;
-
-//             this.newPhone = new AddPhoneInput();
-//             this.newPhone.type = PhoneType.Mobile;
-//             this.newPhone.personId = person.id;
-//         }
-//     };
