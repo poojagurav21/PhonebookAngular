@@ -19,6 +19,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { PhoneBookComponent } from './phonebook/phonebook.component';
 import { CreatePersonModalComponent } from './phonebook/create-person-modal.component';
 import { EditPersonModalComponent } from './phonebook/edit-person-modal.component';
+import { TodoComponent } from './todo/todo.component';
+//import { TodoComponent } from './todo/todo/todo.component';
 
 NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 
@@ -38,7 +40,9 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
         PopoverModule.forRoot(),
         SubheaderModule,
     ],
-    declarations: [],
+    declarations: [
+    
+  ],
     providers: [
         { provide: BsDatepickerConfig, useFactory: NgxBootstrapDatePickerConfigService.getDatepickerConfig },
         { provide: BsDaterangepickerConfig, useFactory: NgxBootstrapDatePickerConfigService.getDaterangepickerConfig },

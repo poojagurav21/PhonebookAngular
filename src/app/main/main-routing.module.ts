@@ -7,8 +7,8 @@ import { RouterModule } from '@angular/router';
             {
                 path: '',
                 children: [
-                    
-                    
+
+
                     // {
                     //     path: 'phonebook',
                     //     loadChildren: () => import('./phonebook/phonebook.module').then(m => m.PhoneBookModule)
@@ -22,7 +22,12 @@ import { RouterModule } from '@angular/router';
                         path: 'customer',
                         loadChildren: () => import('./customer/customer.module').then(m => m.CustomerModule),
                         data: { permission: 'Pages.Tenant.Customer' }
-                       
+
+                    },
+                    {
+                        path: 'todo',
+                        loadChildren: () => import('./todo/todo.module').then(m => m.TodoModule),
+                        data: { permission: 'Pages.Tenant.Todo' }
                     },
                     {
                         path: 'dashboard',
@@ -37,4 +42,4 @@ import { RouterModule } from '@angular/router';
     ],
     exports: [RouterModule],
 })
-export class MainRoutingModule {}
+export class MainRoutingModule { }

@@ -162,10 +162,10 @@
                         </span>
                     </div>
                 </div>
-                <table class="table table-bordered table-hover table-dark text-center fw-bold"
-                    style="margin-top: 5%; font-weight: bold; text-align: center;">
+                <table class="table table-bordered  align-items-center fw-bold mt-5"
+                style="margin-top: 25%; font-weight: bold;">
                     <thead>
-                        <tr class="fw-bold p-5">
+                        <tr class="fw-bold bg-dark " style="  color: rgb(251, 245, 245);">
                             <th>Id</th>
                             <th>Name</th>
                             <th>Surname</th>
@@ -173,7 +173,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let user of custUser" class="bg-hover-light p-5">
+                        <tr *ngFor="let user of custUser" class="bg-hover-light p-5"  style="background-color: rgb(145, 179, 214);">
                             <td>{{user.id}}</td>
                             <td>{{user.name}}</td>
                             <td>{{user.surname}}</td>

@@ -10,7 +10,7 @@ export class AppNavigationService {
     constructor(
         private _permissionCheckerService: PermissionCheckerService,
         private _appSessionService: AppSessionService
-    ) {}
+    ) { }
 
     getMenu(): AppMenu {
         return new AppMenu('MainMenu', 'MainMenu', [
@@ -22,10 +22,11 @@ export class AppNavigationService {
             ),
             new AppMenuItem('Dashboard', 'Pages.Tenant.Dashboard', 'flaticon-line-graph', '/app/main/dashboard'),
             new AppMenuItem('Tenants', 'Pages.Tenants', 'flaticon-list-3', '/app/admin/tenants'),
-           //new AppMenuItem('PhoneBook',null,'flaticon-book','/app/main/phonebook'),
-           new AppMenuItem("PhoneBook", 'Pages.Tenant.PhoneBook', "flaticon-book", "/app/main/phonebook"),
-           new AppMenuItem("Customer", 'Pages.Tenant.Customer', "flaticon-customer", "/app/main/customer"),
-             new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),
+            //new AppMenuItem('PhoneBook',null,'flaticon-book','/app/main/phonebook'),
+            new AppMenuItem("PhoneBook", 'Pages.Tenant.PhoneBook', "flaticon-book", "/app/main/phonebook"),
+            new AppMenuItem("Customer", 'Pages.Tenant.Customer', "flaticon-customer", "/app/main/customer"),
+            new AppMenuItem("Todo", 'Pages.Tenant.Todo', "flaticon-clipboard", "/app/main/todo"),
+            new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),
             new AppMenuItem(
                 'Administration',
                 '',
