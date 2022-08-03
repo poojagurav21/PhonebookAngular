@@ -13,7 +13,7 @@ export class EditCustomerModalComponent extends AppComponentBase {
 
   @ViewChild('modal') modal: ModalDirective;
   @ViewChild('nameInput') nameInput: ElementRef;
-  
+
   customer: EditCustomerInput = new EditCustomerInput();
 
   active: boolean = false;
@@ -28,7 +28,7 @@ export class EditCustomerModalComponent extends AppComponentBase {
 
   show(customerId): void {
     this.active = true;
-    this._customerService.getCustomerForEdit(customerId).subscribe((result)=> {
+    this._customerService.getCustomerForEdit(customerId).subscribe((result) => {
       this.customer = result;
       this.modal.show();
     });

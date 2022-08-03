@@ -1,6 +1,6 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {PhoneBookComponent} from './phonebook.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { PhoneBookComponent } from './phonebook.component';
 
 const routes: Routes = [{
     path: '',
@@ -12,4 +12,4 @@ const routes: Routes = [{
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule],
 })
-export class PhoneBookRoutingModule {}
+export class PhoneBookRoutingModule { }

@@ -1,4 +1,4 @@
-#TodoList{
+#TodoList {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -11,13 +11,11 @@
     background-color: #f5f5f5;
 }
 
-#TodoList li i
-{
+#TodoList li i {
     opacity: 0.5;
 }
 
-#TodoList li i:hover
-{
+#TodoList li i:hover {
     opacity: 1;
     color: #ff0000;
     cursor: pointer;

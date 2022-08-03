@@ -29,7 +29,7 @@ export class EditPersonModalComponent extends AppComponentBase {
 
   show(personId): void {
     this.active = true;
-    this._personService.getPersonForEdit(personId).subscribe((result)=> {
+    this._personService.getPersonForEdit(personId).subscribe((result) => {
       this.person = result;
       this.modal.show();
     });
@@ -37,7 +37,7 @@ export class EditPersonModalComponent extends AppComponentBase {
   }
 
   onShown(): void {
-   // this.nameInput.nativeElement.focus();
+    // this.nameInput.nativeElement.focus();
   }
 
   save(): void {

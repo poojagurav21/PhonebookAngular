@@ -48,8 +48,8 @@ export class PhoneBookComponent extends AppComponentBase implements OnInit {
                 }
             }
         );
-    } 
-    
+    }
+
 
     editPerson(person: PersonListDto): void {
         if (person === this.editingPerson) {

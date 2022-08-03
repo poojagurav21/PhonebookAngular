@@ -17,7 +17,7 @@ export class TodoComponent implements OnInit {
       this.todoItems = response;
     });
   }
-  create(): void{
+  create(): void {
     this.todoService.create(this.newTodoText).subscribe((result) => {
       this.todoItems = this.todoItems.concat(result);
       this.newTodoText = null;
@@ -29,5 +29,5 @@ export class TodoComponent implements OnInit {
       this.todoItems = this.todoItems.filter(item => item.id !== id);
       //this.toasterService.info('Deleted the todo item.');
     });
-  }  
+  }
 }
