@@ -18,7 +18,8 @@ export class CustomerComponent extends AppComponentBase implements OnInit {
     user: User[] = [];
     custUser: UserViewDto[] = [];
     isDeleted = [];
-    check:boolean=false;
+    check: boolean = false;
+    parentSelect:boolean=false;
     //selectedCustomer : CustomerListDto[];
     constructor(
         injector: Injector,
@@ -31,30 +32,78 @@ export class CustomerComponent extends AppComponentBase implements OnInit {
         this.getCustomer();
         this.getUser();
     }
-
-    value(val:number) {
-       
-        if(!this.check)
-        {
-            console.log("val= ",val);
-            var u= this.isDeleted.push(val);
-            console.log("u=",u);
-            return u;
+    bulk(e) {
+        if (e.target.checked == true) {
+            this.check = true;
         }
-        else{
-       var e= this.isDeleted.pop();
-       console.log("e=",e);
-       return e;
+        else {
+            this.check = false;
         }
     }
+    value($event) {
+        const id = $event.target.value;
+        const idChecked = $event.target.checked;
+        console.log(id, idChecked);
+
+        this.customer = this.customer.map((d) => {
+            if (d.id == id) {
+                d.selected = idChecked;
+                this.parentSelect=false;
+                this.isDeleted.push(d.id);
+                return d;
+            }
+            if(id==-1)
+            {
+                d.selected=this.parentSelect;
+                //this.isDeleted.push(d.id);
+                return d;
+            }
+            return d;
+        })
+
+        console.log(this.customer);
+        //     if(!this.check)
+        //     {
+        //         console.log("val= ",val);
+        //         var u= this.isDeleted.push(val);
+        //         console.log("u=",u);
+        //         return u;
+        //     }
+        //     else{
+        //    var e= this.isDeleted.pop();
+        //    console.log("e=",e);
+        //    return e;
+        //     }
+    }
     deleteCustomerSelected() {
-        console.log(this.isDeleted);
-        this._customerService.deleteMultipleCustomer(this.isDeleted).subscribe(() => {
-            this.notify.info(this.l('SuccessfullyDeleted'));
+        console.log("customer=",this.customer);
+        this._customerService.deleteMultipleCustomer(this.isDeleted).subscribe(()=>{
             this.isDeleted.forEach(element => {
-                _.remove(this.customer, element);
-            });
+                console.log("selected",element.selected);
+                if(element.selected ==true)
+                {
+                    _.remove(this.customer,element);
+                }
+        })
+       
+            
         });
+        // console.log(this.isDeleted);
+        // this._customerService.deleteMultipleCustomer(this.isDeleted).subscribe(() => {
+        //     this.notify.info(this.l('SuccessfullyDeleted'));
+        //     this.isDeleted.forEach(element => {
+        //         _.remove(this.customer, element);
+        //     });
+        // });
+        
+        // this.customer= this.customer.filter(_ => _.selected);
+        //     for (var food in this.customer) {
+        //  this._customerService.deleteMultipleCustomer(this.customer)
+        //      .subscribe(data =>{
+        //       console.log(data)
+        //      }   
+        //      )    
+        //   }
         window.location.reload();
     }
     getCustomer(): void {

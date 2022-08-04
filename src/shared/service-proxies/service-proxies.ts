@@ -12687,6 +12687,58 @@ export class TodoServiceProxy {
      * @param id (optional) 
      * @return Success
      */
+    deleteMultipleTodo(id: number[] | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Todo/DeleteMultipleTodo?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            id && id.forEach(item => { url_ += "Id=" + encodeURIComponent("" + item) + "&"; });
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteMultipleTodo(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteMultipleTodo(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDeleteMultipleTodo(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
     delete(id: number | undefined): Observable<void> {
         let url_ = this.baseUrl + "/api/services/app/Todo/Delete?";
         if (id === null)
@@ -17759,6 +17811,7 @@ export class CustomerListDto implements ICustomerListDto {
     emailAddress!: string | undefined;
     registrationDate!: DateTime;
     address!: string | undefined;
+    selected!: boolean;
     custUsers!: UserInCustomerListDto[] | undefined;
     isDeleted!: boolean;
     deleterUserId!: number | undefined;
@@ -17784,6 +17837,7 @@ export class CustomerListDto implements ICustomerListDto {
             this.emailAddress = _data["emailAddress"];
             this.registrationDate = _data["registrationDate"] ? DateTime.fromISO(_data["registrationDate"].toString()) : <any>undefined;
             this.address = _data["address"];
+            this.selected = _data["selected"];
             if (Array.isArray(_data["custUsers"])) {
                 this.custUsers = [] as any;
                 for (let item of _data["custUsers"])
@@ -17813,6 +17867,7 @@ export class CustomerListDto implements ICustomerListDto {
         data["emailAddress"] = this.emailAddress;
         data["registrationDate"] = this.registrationDate ? this.registrationDate.toString() : <any>undefined;
         data["address"] = this.address;
+        data["selected"] = this.selected;
         if (Array.isArray(this.custUsers)) {
             data["custUsers"] = [];
             for (let item of this.custUsers)
@@ -17835,6 +17890,7 @@ export interface ICustomerListDto {
     emailAddress: string | undefined;
     registrationDate: DateTime;
     address: string | undefined;
+    selected: boolean;
     custUsers: UserInCustomerListDto[] | undefined;
     isDeleted: boolean;
     deleterUserId: number | undefined;

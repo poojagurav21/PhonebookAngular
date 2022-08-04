@@ -50,7 +50,8 @@
             <thead>
                 <tr class="fw-bold bg-dark " style=" text-align:center; color: rgb(245, 11, 11);">
                     <th>
-                        Select
+                        <input type="checkbox" class="form-check-input" [(ngModel)]="parentSelect" [value]="-1"
+                            (change)="value($event)">Select
                     </th>
                     <th>Name</th>
                     <th>Email</th>
@@ -63,8 +64,8 @@
             </thead>
             <tbody>
                 <tr *ngFor="let cust of customer" style="text-align:center ; background-color: rgb(226, 238, 250);">
-                    <td><input #selectCust [value]="cust.id"  [checked]="check" (change)="value(cust.id)" type="checkbox"
-                            class="form-check-input"></td> 
+                    <td><input #selectCust [value]="cust.id" [checked]="cust.selected" (change)="value($event)"
+                            type="checkbox" class="form-check-input"></td>
                     <td>{{cust.customerName}}</td>
                     <td>{{cust.emailAddress}}</td>
                     <td>{{cust.registrationDate|date}}</td>

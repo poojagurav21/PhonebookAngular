@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TodoItemDto, TodoServiceProxy } from '@shared/service-proxies/service-proxies';
-
+import * as _ from 'lodash-es';
 @Component({
   selector: 'app-todo',
   templateUrl: './todo.component.html',
@@ -9,7 +9,8 @@ import { TodoItemDto, TodoServiceProxy } from '@shared/service-proxies/service-p
 export class TodoComponent implements OnInit {
   todoItems: TodoItemDto[];
   newTodoText: string;
-
+  isDeleted = [];
+  check:boolean=false;
   constructor(private todoService: TodoServiceProxy) { }
 
   ngOnInit(): void {
@@ -30,4 +31,29 @@ export class TodoComponent implements OnInit {
       //this.toasterService.info('Deleted the todo item.');
     });
   }
+  value(val:number) {
+       
+    if(!this.check)
+    {
+        console.log("val= ",val);
+        var u= this.isDeleted.push(val);
+        console.log("u=",u);
+        return u;
+    }
+    else{
+   var e= this.isDeleted.pop();
+   console.log("e=",e);
+   return e;
+    }
+}
+deleteTodoSelected() {
+    console.log(this.isDeleted);
+    this.todoService.deleteMultipleTodo(this.isDeleted).subscribe(() => {
+        //this.notify.info(this.l('SuccessfullyDeleted'));
+        this.isDeleted.forEach(element => {
+            _.remove(this.todoItems, element);
+        });
+    });
+    window.location.reload();
+}
 }
