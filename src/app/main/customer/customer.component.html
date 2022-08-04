@@ -10,9 +10,9 @@
                 </div>
                 <div class="kt-subheader__toolbar">
                     <div class="kt-subheader__wrapper">
-                        <button *ngIf="'Pages.Tenant.Customer.CreateCustomer' | permission" class="btn btn-primary"
+                        <!-- <button *ngIf="'Pages.Tenant.Customer.CreateCustomer' | permission" class="btn btn-primary"
                             (click)="createCustomerModal.show()"><i class="fa fa-plus"></i> {{"CreateNewCustomer" |
-                            localize}}</button>
+                            localize}}</button> -->
 
                     </div>
                 </div>
@@ -38,10 +38,20 @@
                 </div>
             </div>
         </form>
+        <button *ngIf="'Pages.Tenant.Customer.CreateCustomer' | permission" class="btn btn-primary mt-3"
+            (click)="createCustomerModal.show()"><i class="fa fa-plus"></i> {{"CreateNewCustomer" |
+            localize}}</button>
+
+        <button (click)="deleteCustomerSelected()" class="btn btn-danger mt-3"><i class="fa fa-trash"></i>
+            DeleteSelectedCustomer</button>
+
         <table class="table table-bordered table-hover align-items-center fw-bold mt-5"
             style="margin-top: 25%; font-weight: bold;">
             <thead>
                 <tr class="fw-bold bg-dark " style=" text-align:center; color: rgb(245, 11, 11);">
+                    <th>
+                        Select
+                    </th>
                     <th>Name</th>
                     <th>Email</th>
                     <th>RegistrationDate</th>
@@ -53,6 +63,8 @@
             </thead>
             <tbody>
                 <tr *ngFor="let cust of customer" style="text-align:center ; background-color: rgb(226, 238, 250);">
+                    <td><input #selectCust [value]="cust.id"  [checked]="check" (change)="value(cust.id)" type="checkbox"
+                            class="form-check-input"></td> 
                     <td>{{cust.customerName}}</td>
                     <td>{{cust.emailAddress}}</td>
                     <td>{{cust.registrationDate|date}}</td>
@@ -133,6 +145,7 @@
                     </div>
 
                 </tr>
+
             </tbody>
 
         </table>

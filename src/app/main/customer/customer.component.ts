@@ -17,7 +17,9 @@ export class CustomerComponent extends AppComponentBase implements OnInit {
     newUser: AddUserInput = null;
     user: User[] = [];
     custUser: UserViewDto[] = [];
-
+    isDeleted = [];
+    check:boolean=false;
+    //selectedCustomer : CustomerListDto[];
     constructor(
         injector: Injector,
         private _customerService: CustomerServiceProxy
@@ -30,6 +32,31 @@ export class CustomerComponent extends AppComponentBase implements OnInit {
         this.getUser();
     }
 
+    value(val:number) {
+       
+        if(!this.check)
+        {
+            console.log("val= ",val);
+            var u= this.isDeleted.push(val);
+            console.log("u=",u);
+            return u;
+        }
+        else{
+       var e= this.isDeleted.pop();
+       console.log("e=",e);
+       return e;
+        }
+    }
+    deleteCustomerSelected() {
+        console.log(this.isDeleted);
+        this._customerService.deleteMultipleCustomer(this.isDeleted).subscribe(() => {
+            this.notify.info(this.l('SuccessfullyDeleted'));
+            this.isDeleted.forEach(element => {
+                _.remove(this.customer, element);
+            });
+        });
+        window.location.reload();
+    }
     getCustomer(): void {
         this._customerService.getCustomer(this.filter).subscribe((result) => {
             this.customer = result.items;
